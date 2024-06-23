@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import abi from "./contract/Items.json"; // Adjust the path to your ABI
 
-export default function Order() {
-  //const { contract } = state;
+export default function Order({state}) {
+  const { contract } = state;
   const [orders, setOrders] = useState([]);
-/*
+
   useEffect(() => {
     const fetchOrders = async () => {
       if (contract) {
@@ -27,30 +27,45 @@ export default function Order() {
 
     fetchOrders();
   }, [contract]);
-*/
+
   return (
     <div>
-      <h2>Orders</h2>
+      <h2 style={{marginTop: '30px' }}>Orders</h2>
+
+    <div style={{marginTop: '50px' }}>
+
+      {orders.map((order, index) => (
+      <table key={index} style={{ margin: 'auto'}}>
+        <tr>
+          
+          <th>Product Name</th>
+          <th></th>
+        </tr>
+        <tr>
+          
+          <td>{order.productName}</td>
+          <td>{order.price}</td>
+          <td>
+
+            <form action="">
+            <input type="text" value={order.seller} style={{ display: 'none'}}  />
+            <input type="text" value={order.price} style={{ display: 'none'}} />
+            <button>
+              edit
+            </button>  
+            </form>
+
+          </td>
+          
+        </tr>
+      
+         
+      </table>
+      ))}
+   
+    </div>
+      
     
     </div>
   );
 }
-
-/*
-
-  <ul>
-        {orders.map((order, index) => (
-          <li key={index}>
-            <p>Order ID: {index + 1}</p>
-            <p>Product Name: {order.productName}</p>
-            <p>Price: {order.price}</p>
-            <p>Buyer: {order.buyer}</p>
-            <p>Seller: {order.seller}</p>
-            <p>State: {order.state}</p>
-          </li>
-        ))}
-      </ul>
-
-*/
-
-
