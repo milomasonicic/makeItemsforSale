@@ -25,7 +25,7 @@ export default function EditPage(){
     
      //url - testing URL
    
-     const url = "https://jsonplaceholder.typicode.com"
+    // const url = "http://127.0.0.1:8000/api/items"
     //formData
     
     const handleSubmit = async(e) => {
@@ -41,7 +41,7 @@ export default function EditPage(){
       
 
         try{
-            const response = await axios.post(`${url}/posts`, newItem)
+            const response = await axios.post('http://127.0.0.1:8000/api/items', newItem)
 
             console.log(response.data)
         }
