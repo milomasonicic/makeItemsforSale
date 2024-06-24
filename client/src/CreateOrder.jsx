@@ -30,7 +30,7 @@ export default function CreateOrder({state}) {
 
         alert("Transaction is successul");
         //contract.on
-        window.location.reload();
+       // window.location.reload();
       }
   
     

@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { useRef } from "react";
 import abi from "./contract/Items.json"; // Adjust the path to your ABI
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom';
 
 export default function Order({state}) {
   const { contract } = state;
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
+
+
+  const sellerRef = useRef(null);
+  const priceRef = useRef(null);
+  const productNameRef = useRef(null);
+ 
+
+  const handleEditClick = () => {
+    const order = {
+      seller: sellerRef.current.value,
+      price: priceRef.current.value,
+      productName: productNameRef.current.value,
+    };
+    navigate('/edit', { state: { order } });
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -47,13 +67,12 @@ export default function Order({state}) {
           <td>{order.price}</td>
           <td>
 
-            <form action="">
-            <input type="text" value={order.seller} style={{ display: 'none'}}  />
-            <input type="text" value={order.price} style={{ display: 'none'}} />
-            <button>
-              edit
-            </button>  
-            </form>
+          <form action="" onSubmit={(e) => { e.preventDefault(); handleEditClick(); }}>
+            <input type="text" ref={sellerRef} defaultValue={order.seller} style={{ display: 'none' }} />
+            <input type="text" ref={priceRef} defaultValue={order.price} style={{ display: 'none' }} />
+            <input type="text" ref={productNameRef} defaultValue={order.productName} style={{ display: 'none' }} />
+            <button type="submit">Edit</button>
+        </form>
 
           </td>
           

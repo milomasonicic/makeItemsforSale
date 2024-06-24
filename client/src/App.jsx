@@ -4,6 +4,7 @@
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import CreateItem from './CreateItem';
 import ItemsForSale from './ItemsForSale'
+import EditPage from './EditPage';
 
 
 export default function App(){
@@ -12,8 +13,15 @@ export default function App(){
     const navStyle = {
         color: '#213547',
         textAlign: 'center',
-        padding: '10px',
-      
+        padding: '10px', 
+    }
+
+    const flxStyle = {
+        color: '#213547',
+        textAlign: 'center',
+        padding: '2px',
+        marginTop:'250px' 
+    
     }
 
     const flx = {
@@ -47,10 +55,16 @@ export default function App(){
                   
                 <Route path="*" element={<CreateItem />} />
                 <Route path="/items" element={<ItemsForSale />} />
+                <Route path="/edit" element={<EditPage />} />
             
                 </Routes>
             </div>
-        
+            
+            <footer style={flxStyle}>
+                <hr/>
+                    &copy; 2024 Blck MarketPlace. All rights reserved.
+             </footer>
+             
 
         </Router>
     )
