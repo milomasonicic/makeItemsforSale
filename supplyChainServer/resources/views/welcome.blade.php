@@ -17,5 +17,10 @@
     </head>
     <body class="antialiased">
         <h1>Items</h1>
+        <ul>
+          @foreach ($items as $item)
+              <li>{{$item->name}} - {{$item->description}}</li>
+          @endforeach
+        </ul>
     </body>
 </html>

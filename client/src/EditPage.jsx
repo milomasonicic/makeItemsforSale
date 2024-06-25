@@ -7,7 +7,7 @@ export default function EditPage(){
 
     const location = useLocation();
     const { order } = location.state || {};
-    const descriptionRef = useRef(null)
+    const descriptionRef = useRef('')
 
     const formContainer = {
         margin: '0 auto',
@@ -21,20 +21,14 @@ export default function EditPage(){
         padding:'10px',
         marginTop:'15px'
     }
-
-    
-     //url - testing URL
-   
-    // const url = "http://127.0.0.1:8000/api/items"
-    //formData
-    
+ 
     const handleSubmit = async(e) => {
         e.preventDefault();
 
         const newItem = {
             id: 1,
             seller: order.seller,
-            description: descriptionRef.current,
+            description: descriptionRef.current.value,
             price: "222",
             name: order.productName
           };
@@ -77,7 +71,7 @@ export default function EditPage(){
 
                 <div>
                     <div>Description:</div>
-                    <textarea  style={{...inputFile, height:'110px'}} value={descriptionRef} name="" id="" placeholder='Descritpion'></textarea>
+                    <textarea  style={{...inputFile, height:'110px'}} ref={descriptionRef} name="" id="" placeholder='Descritpion'></textarea>
                 </div>
                 
                 <button type='submit'>Publish</button>
@@ -92,13 +86,3 @@ export default function EditPage(){
     )
 }
 
-/*
-
-
-                <div>
-                    <div>
-                        Image:
-
-                    </div>
-                    <input type="file" />
-                </div>*/
