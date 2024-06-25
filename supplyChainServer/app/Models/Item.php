@@ -12,7 +12,8 @@ class Item extends Model
         'name',
         'price',
         'description',
-        'seller'
+        'seller',
+        'imagepath'
         
     ];
 }

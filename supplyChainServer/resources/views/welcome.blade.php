@@ -20,7 +20,9 @@
         <ul>
           @foreach ($items as $item)
               <li>{{$item->name}} - {{$item->description}} - {{$item->id}} - 
-                {{$item->seller}}
+               
+                {{ $item->imagepath }}
+                <img src="{{ $item->imagepath }}" alt="">
               </li>
           @endforeach
         </ul>

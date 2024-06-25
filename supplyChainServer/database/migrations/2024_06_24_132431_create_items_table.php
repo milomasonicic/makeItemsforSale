@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string("description");
             $table->string("price");
             $table->string("name");
+            $table->string('imagepath')->nullable();
         });
+
     }
 
     /**
