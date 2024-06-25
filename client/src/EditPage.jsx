@@ -3,11 +3,13 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios'
 import { useRef } from 'react';
 
+
 export default function EditPage(){
 
     const location = useLocation();
     const { order } = location.state || {};
     const descriptionRef = useRef('')
+    const imageRef = useRef(null);
 
     const formContainer = {
         margin: '0 auto',
@@ -25,18 +27,20 @@ export default function EditPage(){
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const newItem = {
-            id: 1,
-            seller: order.seller,
-            description: descriptionRef.current.value,
-            price: "222",
-            name: order.productName
-          };
-      
+        const formData = new FormData();
+        formData.append('id', 1); // Dummy ID, možeš koristiti UUID kao što smo prethodno pokazali
+        formData.append('seller', order.seller);
+        formData.append('description', descriptionRef.current.value);
+        formData.append('price', "222"); // Trenutno je fiksna vrednost, možeš promeniti da se dinamički unese
+        formData.append('name', order.productName);
+        formData.append('image', imageRef.current.files[0]); // Dodavanje izabrane slike      
 
         try{
-            const response = await axios.post('http://127.0.0.1:8000/api/items', newItem)
-
+            const response = await axios.post('http://127.0.0.1:8000/api/items', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             console.log(response.data)
         }
         catch(error){
@@ -72,6 +76,11 @@ export default function EditPage(){
                 <div>
                     <div>Description:</div>
                     <textarea  style={{...inputFile, height:'110px'}} ref={descriptionRef} name="" id="" placeholder='Descritpion'></textarea>
+                </div>
+
+                <div>
+                    <div>Image:</div>
+                    <input style={inputFile} type="file" ref={imageRef} />
                 </div>
                 
                 <button type='submit'>Publish</button>
