@@ -19,7 +19,9 @@
         <h1>Items</h1>
         <ul>
           @foreach ($items as $item)
-              <li>{{$item->name}} - {{$item->description}}</li>
+              <li>{{$item->name}} - {{$item->description}} - {{$item->id}} - 
+                {{$item->seller}}
+              </li>
           @endforeach
         </ul>
     </body>
