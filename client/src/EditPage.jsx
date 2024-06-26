@@ -35,6 +35,7 @@ export default function EditPage(){
         formData.append('name', order.productName);
         formData.append('image', imageRef.current.files[0]); // Dodavanje izabrane slike      
 
+        
         try{
             const response = await axios.post('http://127.0.0.1:8000/api/items', formData, {
                 headers: {
@@ -52,27 +53,13 @@ export default function EditPage(){
 
     return(
         <div>
-            Edit
+           
             <div>
-      <h1>Edit and Publish Item</h1>
+      <h3>Add Description and Picture To The Item </h3>
       {order ? (
         <div>
            <form action="" style={formContainer} onSubmit={handleSubmit}>
-                <div>
-                    <div>Seller:</div>
-                    <input style={inputFile} type="text" value={order.seller}/>
-                </div>
-
-                <div>
-                    <div>Price:</div>
-                    <input style={inputFile} type="text" value={order.price}/>
-                </div>
-
-                <div>
-                    <div>Name:</div>
-                    <input style={inputFile} type="text" defaultValue={order.productName} />
-                </div>
-
+                
                 <div>
                     <div>Description:</div>
                     <textarea  style={{...inputFile, height:'110px'}} ref={descriptionRef} name="" id="" placeholder='Descritpion'></textarea>
