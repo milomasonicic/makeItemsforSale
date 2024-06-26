@@ -29,4 +29,10 @@ class ItemController extends Controller
     
         
     }
+
+    public function showItems(){
+        $items= Item::all();
+
+        return $items;
+    }
 }

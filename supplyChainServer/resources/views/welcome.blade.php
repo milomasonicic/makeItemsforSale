@@ -22,7 +22,7 @@
               <li>{{$item->name}} - {{$item->description}} - {{$item->id}} - 
                
                 {{ $item->imagepath }}
-                <img src="{{ $item->imagepath }}" alt="">
+                <img src="{{ $item->imagepath }}" alt="" style="width: 200px">
               </li>
           @endforeach
         </ul>
