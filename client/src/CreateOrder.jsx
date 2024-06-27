@@ -10,27 +10,19 @@ export default function CreateOrder({state}) {
     //console.log('State iz order:', state);
 
     const create = async(event)=>{
+
         event.preventDefault();
-        const {contract}=state;
-        console.log(contract)
+        const { contract } = state;
         const _productName = document.querySelector("#productName").value;
-        
         const amountValue = document.querySelector("#price").value;
-     
-        //const _price = String(amountValue * 10000000000000000000) // convert to WEI
-        //const _price = {value:parseEther(amountValue.toString())}
-        
-  
-        // Pretpostavimo da je amountValue vrednost iz input polja u ETH
-        const amm = "50000";  // npr. 2 ETH
-        const _price = ethers.parseUnits(amm, 'ether'); // Konvertuje 2 ETH u wei
-        //const _price = {value:amount.toString()}
-        const transaction = await contract.createOrder( _productName, _price)
+
+        // Use the entered value directly as a number
+        const _price = parseInt(amountValue, 10); // Convert string to number
+        const transaction = await contract.createOrder(_productName, _price);
         await transaction.wait();
 
-        alert("Transaction is successul");
-        //contract.on
-       // window.location.reload();
+        alert("Transaction is successful");
+        
       }
   
     
@@ -44,13 +36,11 @@ export default function CreateOrder({state}) {
                     <input type="text" required="required" id="productName" placeholder="Name" />
                 </div>
 
-                <div  className="mx-auto my-4">
-                <select name="amount" id="price">
-                <option value="1">1 ETH</option>
-                <option value="2">2 ETH</option>
-                <option value="5">5 ETH</option>
-                </select>
+                
+                <div className="mx-auto my-4">
+                    <input type="number" required="required" id="price" placeholder="Price in units" />
                 </div>
+                
 
 
                 <button>Create</button>

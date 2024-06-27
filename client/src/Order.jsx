@@ -21,6 +21,7 @@ export default function Order({state}) {
     const order = {
       seller: sellerRef.current.value,
       price: priceRef.current.value,
+     // price: ethers.utils.formatEther(order.price),
       productName: productNameRef.current.value,
     };
     navigate('/edit', { state: { order } });
@@ -35,7 +36,11 @@ export default function Order({state}) {
 
           for (let i = 1; i <= orderCounter; i++) {
             const order = await contract.orders(i);
-            ordersFromContract.push(order);
+                        ordersFromContract.push({
+                            productName: order.productName,
+                            price: order.price.toString(), // Ensure price is a string for rendering
+                            seller: order.seller,
+                        });
           }
 
           setOrders(ordersFromContract);
@@ -59,12 +64,14 @@ export default function Order({state}) {
         <tr>
           
           <th>Product Name</th>
+          <th>Item Price</th>
           <th></th>
         </tr>
         <tr>
           
           <td>{order.productName}</td>
-          <td>{order.price}</td>
+          <td> {order.price} </td>
+          
           <td>
 
           <form action="" onSubmit={(e) => { e.preventDefault(); handleEditClick(); }}>

@@ -3,7 +3,7 @@ export default function SingeItem({img, seller, title}){
 
     const styleCard = {
         width: '290px',
-        height: '280px',
+        height: '310px',
         backgroundColor: 'rgb(245, 244, 242)',
         boxShadow:"0 4px 4px rgba(0, 0, 0, 0.1)",
         borderRadius: '8px',
