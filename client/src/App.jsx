@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import CreateItem from './CreateItem';
 import ItemsForSale from './ItemsForSale'
 import EditPage from './EditPage';
-
+import Order from './Order';
 
 export default function App(){
 
@@ -43,11 +43,13 @@ export default function App(){
                         
                                          
                     </li>
+                   
                     <li>
                         <Link to="/items">
                             Items for Sale
                         </Link>
                     </li>
+
                 </ul>
 
                 <hr/>
@@ -56,6 +58,7 @@ export default function App(){
                 <Route path="*" element={<CreateItem />} />
                 <Route path="/items" element={<ItemsForSale />} />
                 <Route path="/edit" element={<EditPage />} />
+               
             
                 </Routes>
             </div>

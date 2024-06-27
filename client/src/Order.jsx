@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
-import { useRef } from "react";
-import abi from "./contract/Items.json"; // Adjust the path to your ABI
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 
-import { useNavigate } from 'react-router-dom';
-
-export default function Order({state}) {
-  const { contract } = state;
-  const [orders, setOrders] = useState([]);
+export default function Order({ contract }) {
+  const [orders, setOrders] = useState([]); // State za čuvanje ordera
   const navigate = useNavigate();
-
 
   const sellerRef = useRef(null);
   const priceRef = useRef(null);
   const productNameRef = useRef(null);
- 
 
-  const handleEditClick = () => {
-    const order = {
-      seller: sellerRef.current.value,
-      price: priceRef.current.value,
-     // price: ethers.utils.formatEther(order.price),
-      productName: productNameRef.current.value,
-    };
-    navigate('/edit', { state: { order } });
+  const handleEditClick = (order) => {
+    const { seller, price, productName } = order;
+    sellerRef.current.value = seller;
+    priceRef.current.value = ethers.utils.formatEther(price); // Formatiraj cenu u ether
+    productNameRef.current.value = productName;
+    navigate("/edit", { state: { order } });
   };
 
   useEffect(() => {
@@ -36,14 +27,14 @@ export default function Order({state}) {
 
           for (let i = 1; i <= orderCounter; i++) {
             const order = await contract.orders(i);
-                        ordersFromContract.push({
-                            productName: order.productName,
-                            price: order.price.toString(), // Ensure price is a string for rendering
-                            seller: order.seller,
-                        });
+            ordersFromContract.push({
+              productName: order.productName,
+              price: order.price, // Nemoj formatirati ovde, formatiraj samo pri prikazu
+              seller: order.seller,
+            });
           }
 
-          setOrders(ordersFromContract);
+          setOrders(ordersFromContract); // Ažuriraj state sačuvane ordera
         } catch (error) {
           console.error("Error fetching orders:", error);
         }
@@ -55,43 +46,30 @@ export default function Order({state}) {
 
   return (
     <div>
-      <h2 style={{marginTop: '30px' }}>Orders</h2>
+      <h2 style={{ marginTop: "30px" }}>Orders</h2>
 
-    <div style={{marginTop: '50px' }}>
-
-      {orders.map((order, index) => (
-      <table key={index} style={{ margin: 'auto'}}>
-        <tr>
-          
-          <th>Product Name</th>
-          <th>Item Price</th>
-          <th></th>
-        </tr>
-        <tr>
-          
-          <td>{order.productName}</td>
-          <td> {order.price} </td>
-          
-          <td>
-
-          <form action="" onSubmit={(e) => { e.preventDefault(); handleEditClick(); }}>
-            <input type="text" ref={sellerRef} defaultValue={order.seller} style={{ display: 'none' }} />
-            <input type="text" ref={priceRef} defaultValue={order.price} style={{ display: 'none' }} />
-            <input type="text" ref={productNameRef} defaultValue={order.productName} style={{ display: 'none' }} />
-            <button type="submit">Edit</button>
-        </form>
-
-          </td>
-          
-        </tr>
-      
-         
-      </table>
-      ))}
-   
-    </div>
-      
-    
+      <div style={{ marginTop: "50px" }}>
+        <table style={{ margin: "auto" }}>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Item Price</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <tr key={index}>
+                <td>{order.productName}</td>
+                <td> ETH</td>
+                <td>
+                  <button onClick={() => handleEditClick(order)}>Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
